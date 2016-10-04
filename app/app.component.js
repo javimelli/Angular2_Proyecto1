@@ -20,11 +20,37 @@ System.register(['@angular/core'], function(exports_1, context_1) {
         execute: function() {
             AppComponent = (function () {
                 function AppComponent() {
+                    var _this = this;
+                    this.resetTimer();
+                    setInterval(function () { return _this.tick(); }, 1000);
                 }
+                AppComponent.prototype.resetTimer = function () {
+                    this.minutos = 24;
+                    this.segundos = 59;
+                    this.buttonLabel = 'Empezar';
+                    this.tooglePause();
+                };
+                AppComponent.prototype.tick = function () {
+                    if (!this.isPaused) {
+                        this.buttonLabel = 'Detener';
+                        if (--this.segundos < 0) {
+                            this.segundos = 59;
+                            if (--this.minutos < 0) {
+                                this.resetTimer();
+                            }
+                        }
+                    }
+                };
+                AppComponent.prototype.tooglePause = function () {
+                    this.isPaused = !this.isPaused;
+                    if (this.minutos < 24 || this.segundos < 59) {
+                        this.buttonLabel = this.isPaused ? 'Reanudar' : 'Detener';
+                    }
+                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: '<h1>My First Angular App</h1>'
+                        template: '<img src="assets/img/reloj.png"><h1>{{minutos}}:{{segundos}}</h1><p><button (click)="tooglePause()">{{buttonLabel}}</button></p>'
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
