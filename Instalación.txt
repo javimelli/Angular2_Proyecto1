@@ -1,0 +1,72 @@
+- Instalar nodejs con una versión superior a 5.x.x, comprobar versiones node -v, la más actual es la v6.7.0
+- Instalar npm con una versión superior a 3.x.x, comprobar versiones npm -version
+La instalación de node incluye la instalación de npm.
+NPM es un Node Package Manager. Es un administrador de paquetes de paquetes javascript. herramienta de línea de comandos.
+En el directorio donde vayamos a realizar la implementación de la aplicación o donde vayamos a usar Angular debe existir un
+fichero llamado package.json que contendrá la información sobre las dependencias y paquetes que vamos a descargar y utilizar
+en nuestro proyecto. NPM resuelve todas las dependencias de dependencias para que no falte nada.
+Para crear un package.json debemos situarnos en el directorio donde vamos a crear nuestra aplicación y ejecutar npm init.
+Angular 2 permite una instalación modular para que instalemos solo lo que necesitemos. De est forma Angular
+no llega con un solo paquete instalable, si no de muchos.
+----------------------PAQUETES DE ANGULAR 2----------------------------------------------------------
+@angular/core: Es el paquete más relevante, la columna vertebral de angular. Tiene los elementos más comunes como las
+directivas o los componentes.
+@angular/common: Contiene todas las direcciones de directivas y servicios ya preconstruidos en angular 2.
+@angular/compiler: Es el responsable de compilar las plantillas HTML y convertirlo en código que pueda redenrizar nuestra
+aplicación.
+@angular/platform/browser: Tiene las clases y funciones necesrias para interactuar con el DOM en el contexto de los navegadores.
+@angular/platform/browser/dynamic: Realiza la inicialización de el bootstraping que inicializa nuestras aplicaciones.
+@angular/http: Es el cliente http de angular.
+@angular/router: el router de angular.
+Las aplicaciones de Angular2 usan también librerías de terceros y que se requieren como dependencias.
+------------------CONTRUCCIÓN DEL PACKAGE.JSON CON NPM-------------------------------------------------
+- Abrimos la consola y nos situamos en el directorio donde vayamos a contruir nuestra aplicación.
+- Ejecutamos npm init.
+- Nos pasará a pedir información sobre el package.json
+	> name(nombreCarpeta): Es el nombre de la aplicación, por defecto pone el directorio donde nos encontramos. No puede 	contener letras mayúsculas.
+	> version(1.0.0): versión, por defecto la 1.0.0
+	> description: Si desea realizar una descripción del la aplicación.
+	> entry point(index.js): El archivo que se utiliza para iniciar la aplicación.
+	> test command: Comando para hacer pruebas.
+	> git repository: repositorio en git.
+	> keywords: Palabras claves.
+	> author: autor.
+	> license: poner alguna licencia.
+Finalmente tecleamos yes y pulsamos enter.
+Ahora podemos instalar los paquetes. Para ello nos situamos en la carpeta del proyecto. Utilizamos el comando npm install "nombre de los paquetes que queremos instalar" --save.
+ El --save es para que se realiza una instalación permanente. Por ejemplo
+npm install @angular/common @angular/core @angular/compiler --save
+npm install @angular/platform-browser @angular/platform-browser-dynamic --save
+npm install @angular/router @angular/router-deprecated --save
+npm install @angular/http --save
+Nos saldrá un mensaje como que necesitamos las dependencias de rxjs y zone.js. Son las librerías de terceros que se necesitan.
+Ahora instalamos las librerías de terceros que utilizan y necesitan los paquetes instalados.
+npm install es6-shim reflect-metadata rxjs zone.js --save
+Puede salir alguna advertencia de la versión que estamos usando. También es necesario instalar el paquete systemjs que es el cargador universal de módulos y permite transpilar de es5 a es6.
+npm install systemjs --save
+Podemos instalar bootstrap para el estilo css.
+npm install bootstrap --save
+Una vez instalado todo esto podemos instalar todo en un nuevo directorio simplemente colocando este package.json en el directorio y ejecutando el comando npm install.
+Pasamos a instalar tyscript y hacerlo global en todo nuestro entorno para poder realizar la compilación de nuestro archivos. Utilizamos el siguiente comando.
+npm install -g typescript
+Utilizamos la -g para instalarlo globalmente y poder utilizarlo en cualquier escritorio.
+Una vez instalado debemos indicar como vamos a usar typescript dentro de nuestro proyecto, por tanto en el cmd nos situamos en el directorio de nuestro proyecto
+ y utilizamos el siguiente comando.
+ tsc --init --experimentalDecorators --emitDecoratorMetadata --target ES5 --module system --moduleResolution node
+ Este comando nos creará un archivo tsconfig.json que guardará la configuración de typescript.
+ --init inicializa typescript en nuestro proyecto.
+ --experimentalDecorators y --emitDecoratorMetadata soporta decoradores experimentales.
+ --target ES5 Destino de la transcompilación.
+ --module system El sistema para llevar a cabo la importación de módulos.
+ Este archivo contiene todas las configuraciones necesarias para que el compilador typescript compile el código componente en código plano es5 javascript legible para los navegadores.
+ Un TRANSCOMPILADOR es un compilador fuente a fuente, es decir compila códigos de lenguajes del mismo nivel, en este caso de typescript a javascript.
+ En el archivo tsconfig el rootDir indica el directorio raíz de nuestra aplicación que es donde se coloca el archivo tsconfig.json y outDir indica
+ donde se colocarán los archivos javascript producidos de la transcompilación. sourceMap sirve para la depuración, indica si los archivos fuente son generados en
+ tiempo de ejecución para realizar una copia de rastreo del código fuente y pueda ser analizado por las herramientas de los navegadores.
+ Al igual que angular2 typescript también necesita algunas librerías adicionales. Es necesario informar al compilador las Apis de javascript que estemos utilizando en el proyecto. Para
+ ello se utiliza un fichero con la extensión d.ts de definición de tipos. utilizamos el siguiente comando para instalar la herramienta typings.
+ npm install -g typings
+ typings install dt~es6-shim --save --global
+ Para poder distribuir la aplicación sin todos los paquetes y dependencias hay que añadir typings y typecrpt en el apartado devDependencies del package.json. Para ver la versión
+ que hemos instalado ejecutamos tsc --version y typings --version. Además se necesitará un servidor.
+
